@@ -17,7 +17,7 @@ module.exports = {
                         return res.json({authData, news})
                     }    
                 } catch (error) {
-                    return res.status(400).json({ message: 'we font have any news yet'});
+                    return res.status(400).json({ message: 'we dont have any news yet'});
                 }
             }
         });
@@ -36,5 +36,31 @@ module.exports = {
                 return res.status(400).json({ message: 'we dont have any news yet'});
             }
 
-    }
+    },
+
+    //getOneNews
+    async getOneNews(req,res){
+        try {
+            console.log("param in getOneNews:", req.params);
+            console.log("param in getOneNews:", req.params._id);
+            const { news_id } = req.params;
+            console.log("TEST1:", news_id)
+            const news = await News.find({_id: req.params._id})
+            if(news){
+                console.log("if OK!!!!");
+                //news.view
+                let viewsCount = news[0].views;
+                viewsCount++;
+                console.log("TEST:", viewsCount);
+                news[0].views = viewsCount;
+                await news[0].save();
+                return res.json({ news })
+            }    
+        } catch (error) {
+            console.log("ERROR in getNews:", error);
+            return res.status(400).json({ message: 'we dont have any news yet'});
+        }
+
+}
+
 }

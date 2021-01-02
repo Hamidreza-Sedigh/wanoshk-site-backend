@@ -37,7 +37,7 @@ module.exports = {
                         return res.json({authData, events})
                     }    
                 } catch (error) {
-                    return res.status(400).json({ message: 'we font have any event yet'});
+                    return res.status(400).json({ message: 'we dont have any event yet'});
                 }
             }
         });

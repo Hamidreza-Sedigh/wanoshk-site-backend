@@ -33,6 +33,7 @@ routes.post('/registration/:registration_id/rejections', verifyToken, RejectionC
 routes.post('/login', LoginController.store);
 
 routes.get('/getNews', NewsController.getAllNews)
+routes.get('/getOneNews/:_id', NewsController.getOneNews)
 
 //Dashboard:
 routes.get('/dashboard/:sport', verifyToken, DashboardController.getAllEvents)

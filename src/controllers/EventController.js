@@ -52,7 +52,7 @@ module.exports = {
                     console.log("delete worked.");
                     return res.status(204).send();
                 } catch (error) {
-                    return res.status(400).json({ message: 'we font have any event with this ID'});
+                    return res.status(400).json({ message: 'we dont have any event with this ID'});
                 }      
                 
             }
