@@ -26,7 +26,7 @@ module.exports = {
     async getAllNews(req,res){
 
             try {
-                const news = await News.find({})
+                const news = await News.find({}).sort({ date: -1 }).limit(10);
                 if(news){
                     console.log("if OK!!!!");
                     return res.json({ news })
@@ -61,6 +61,52 @@ module.exports = {
             return res.status(400).json({ message: 'we dont have any news yet'});
         }
 
-}
+    },
+
+    async getNewsTypes(req,res){
+        try {
+            console.log("param in getOneNews:", req.params);
+            console.log("body  in getOneNews:", req.body);
+            let categoryReq = req.body.type;
+            let categoryRequested = '';
+            console.log("categoryReq:", categoryReq);
+            switch(categoryReq) {
+                case 'a':
+                    categoryRequested = 'سیاسی'
+                    break;
+                case 'b':
+                    categoryRequested = 'اقتصادی'
+                    break;
+                case 'c':
+                    categoryRequested = 'ورزشی'
+                    break;
+                case 'd':
+                    categoryRequested = 'فناوری'
+                    break;
+                case 'd':
+                    categoryRequested = 'اجتماعی'
+                    break;
+                case 'd':
+                    categoryRequested = 'فرهنگی'
+                    break;
+                default:
+                  // code block
+            }
+            console.log("categoryRequested:", categoryRequested);
+
+            const news = await News.find({category:categoryRequested}).sort({ date: -1 }).limit(10);
+            //console.log("find response:", news);
+            if(news){
+                console.log("if OK!!!!");
+                //news.view
+                
+                return res.json({ news })
+            }    
+        } catch (error) {
+            console.log("ERROR in getNews:", error);
+            return res.status(400).json({ message: 'we dont have any news yet'});
+        }
+
+    }
 
 }

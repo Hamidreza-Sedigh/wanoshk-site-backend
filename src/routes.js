@@ -34,6 +34,8 @@ routes.post('/login', LoginController.store);
 
 routes.get('/getNews', NewsController.getAllNews)
 routes.get('/getOneNews/:_id', NewsController.getOneNews)
+routes.post('/getNewsType', NewsController.getNewsTypes)
+
 
 //Dashboard:
 routes.get('/dashboard/:sport', verifyToken, DashboardController.getAllEvents)
