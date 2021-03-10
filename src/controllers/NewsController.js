@@ -38,6 +38,58 @@ module.exports = {
 
     },
 
+    async getMostVisitedDaily(req, res){
+        try {
+            const news = await News.find({}).sort({ views: -1 }).limit(10);
+            if(news){
+                console.log("if OK!!!!");
+                return res.json({ news })
+            }    
+        } catch (error) {
+            console.log("ERROR in getNews:", error);
+            return res.status(400).json({ message: 'we dont have any news yet'});
+        }
+    },
+
+    async getMostVisitedWeekly(req, res){
+        try {
+            const news = await News.find({}).sort({ views: -1 }).limit(10);
+            if(news){
+                console.log("if OK!!!!");
+                return res.json({ news })
+            }    
+        } catch (error) {
+            console.log("ERROR in getNews:", error);
+            return res.status(400).json({ message: 'we dont have any news yet'});
+        }
+    },
+
+    async getMostCommentedDaily(req, res){
+        try {
+            const news = await News.find({}).sort({ date: -1 }).limit(10);
+            if(news){
+                console.log("if OK!!!!");
+                return res.json({ news })
+            }    
+        } catch (error) {
+            console.log("ERROR in getNews:", error);
+            return res.status(400).json({ message: 'we dont have any news yet'});
+        }
+    },
+
+    async getMostCommentedweekly(req, res){
+        try {
+            const news = await News.find({}).sort({ date: -1 }).limit(10);
+            if(news){
+                console.log("if OK!!!!");
+                return res.json({ news })
+            }    
+        } catch (error) {
+            console.log("ERROR in getNews:", error);
+            return res.status(400).json({ message: 'we dont have any news yet'});
+        }
+    },
+
     //getOneNews
     async getOneNews(req,res){
         try {
@@ -83,10 +135,10 @@ module.exports = {
                 case 'd':
                     categoryRequested = 'فناوری'
                     break;
-                case 'd':
+                case 'e':
                     categoryRequested = 'اجتماعی'
                     break;
-                case 'd':
+                case 'f':
                     categoryRequested = 'فرهنگی'
                     break;
                 default:

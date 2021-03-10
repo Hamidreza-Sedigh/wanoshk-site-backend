@@ -35,7 +35,10 @@ routes.post('/login', LoginController.store);
 routes.get('/getNews', NewsController.getAllNews)
 routes.get('/getOneNews/:_id', NewsController.getOneNews)
 routes.post('/getNewsType', NewsController.getNewsTypes)
-
+routes.post('/getMostVisitedDaily', NewsController.getMostVisitedDaily)
+routes.post('/getMostVisitedWeekly', NewsController.getMostVisitedWeekly)
+routes.post('/getMostCommentedDaily', NewsController.getMostCommentedDaily)
+routes.post('/getMostCommentedweekly', NewsController.getMostCommentedweekly)
 
 //Dashboard:
 routes.get('/dashboard/:sport', verifyToken, DashboardController.getAllEvents)
