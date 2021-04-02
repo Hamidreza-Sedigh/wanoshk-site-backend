@@ -28,7 +28,7 @@ module.exports = {
             try {
                 const news = await News.find({}).sort({ date: -1 }).limit(10);
                 if(news){
-                    console.log("if OK!!!!");
+                    console.log("All News");
                     return res.json({ news })
                 }    
             } catch (error) {
@@ -42,7 +42,7 @@ module.exports = {
         try {
             const news = await News.find({}).sort({ views: -1 }).limit(10);
             if(news){
-                console.log("if OK!!!!");
+                console.log("-getMostVisitedDaily");
                 return res.json({ news })
             }    
         } catch (error) {
@@ -55,7 +55,7 @@ module.exports = {
         try {
             const news = await News.find({}).sort({ views: -1 }).limit(10);
             if(news){
-                console.log("if OK!!!!");
+                console.log("-getMostVisitedWeekly");
                 return res.json({ news })
             }    
         } catch (error) {
@@ -68,7 +68,7 @@ module.exports = {
         try {
             const news = await News.find({}).sort({ date: -1 }).limit(10);
             if(news){
-                console.log("if OK!!!!");
+                console.log("-getMostCommentedDaily");
                 return res.json({ news })
             }    
         } catch (error) {
@@ -81,7 +81,7 @@ module.exports = {
         try {
             const news = await News.find({}).sort({ date: -1 }).limit(10);
             if(news){
-                console.log("if OK!!!!");
+                console.log("-getMostCommentedweekly");
                 return res.json({ news })
             }    
         } catch (error) {
@@ -99,7 +99,7 @@ module.exports = {
             console.log("TEST1:", news_id)
             const news = await News.find({_id: req.params._id})
             if(news){
-                console.log("if OK!!!!");
+                console.log("-getOneNews");
                 //news.view
                 let viewsCount = news[0].views;
                 viewsCount++;
@@ -149,7 +149,7 @@ module.exports = {
             const news = await News.find({category:categoryRequested}).sort({ date: -1 }).limit(10);
             //console.log("find response:", news);
             if(news){
-                console.log("if OK!!!!");
+                console.log("-getNewsTypes");
                 //news.view
                 
                 return res.json({ news })
