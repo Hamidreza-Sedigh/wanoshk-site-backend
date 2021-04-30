@@ -11,6 +11,7 @@ const ApprovalController = require('./controllers/ApprovalController');
 const RejectionController = require('./controllers/RejectionController');
 const uploadConfig = require('./config/upload');
 const NewsController = require('./controllers/NewsController');
+const ContactUsController = require('./controllers/ContactusController');
 
 const routes = express.Router();
 const upload = multer(uploadConfig)
@@ -39,6 +40,8 @@ routes.post('/getMostVisitedDaily', NewsController.getMostVisitedDaily)
 routes.post('/getMostVisitedWeekly', NewsController.getMostVisitedWeekly)
 routes.post('/getMostCommentedDaily', NewsController.getMostCommentedDaily)
 routes.post('/getMostCommentedweekly', NewsController.getMostCommentedweekly)
+
+routes.post('/contactUs', ContactUsController.createContact);
 
 //Dashboard:
 routes.get('/dashboard/:sport', verifyToken, DashboardController.getAllEvents)
