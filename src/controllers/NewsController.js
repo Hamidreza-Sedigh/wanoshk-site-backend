@@ -97,6 +97,7 @@ module.exports = {
             console.log("param in getOneNews:", req.params._id);
             const { news_id } = req.params;
             console.log("TEST1:", news_id)
+            console.log("****NEW TEST2", req.testVar);
             const news = await News.find({_id: req.params._id})
             if(news){
                 console.log("-getOneNews");

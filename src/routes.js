@@ -16,6 +16,7 @@ const ContactUsController = require('./controllers/ContactusController');
 const routes = express.Router();
 const upload = multer(uploadConfig)
 
+//var var2 = app.locals;
 
 routes.get('/status', (req, res)=>{
     res.send({ status : 200})

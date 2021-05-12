@@ -45,6 +45,7 @@ io.on('connection', socket => {
 app.use((req, res, next)=> {
     req.io = io;
     req.connectUsers = connectUsers;
+    req.conf = "tested!"
     return next();
 });
 app.use(cors());

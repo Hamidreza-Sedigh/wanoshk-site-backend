@@ -18,22 +18,5 @@ module.exports = {
         } catch (error) {
             throw Error('Error while registering new user: ${error}')
         }
-    },
-
-    async getMyRegistrations(req, res){
-        jwt.verify(req.token, 'secret', async(err, authData) => {
-            if (err) {
-                res.sendStatus(401);
-            } else {
-                try {
-                    const registrationArr = await Registration.find({"owner": authData.user._id})
-                    if(registrationArr){
-                        return res.json(registrationArr)
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            }
-        });
     }
 }
