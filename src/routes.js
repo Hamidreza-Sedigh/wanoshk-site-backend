@@ -12,6 +12,7 @@ const RejectionController = require('./controllers/RejectionController');
 const uploadConfig = require('./config/upload');
 const NewsController = require('./controllers/NewsController');
 const ContactUsController = require('./controllers/ContactusController');
+const SourcesController = require('./controllers/SourcesController');
 
 const routes = express.Router();
 const upload = multer(uploadConfig)
@@ -34,13 +35,17 @@ routes.post('/registration/:registration_id/rejections', verifyToken, RejectionC
 //login
 routes.post('/login', LoginController.store);
 
-routes.get('/getNews', NewsController.getAllNews)
-routes.get('/getOneNews/:_id', NewsController.getOneNews)
-routes.post('/getNewsType', NewsController.getNewsTypes)
-routes.post('/getMostVisitedDaily', NewsController.getMostVisitedDaily)
-routes.post('/getMostVisitedWeekly', NewsController.getMostVisitedWeekly)
-routes.post('/getMostCommentedDaily', NewsController.getMostCommentedDaily)
-routes.post('/getMostCommentedweekly', NewsController.getMostCommentedweekly)
+routes.get('/getNews', NewsController.getAllNews);
+routes.get('/getOneNews/:_id', NewsController.getOneNews);
+routes.post('/getNewsType', NewsController.getNewsTypes);
+routes.post('/getMostVisitedDaily', NewsController.getMostVisitedDaily);
+routes.post('/getMostVisitedWeekly', NewsController.getMostVisitedWeekly);
+routes.post('/getMostCommentedDaily', NewsController.getMostCommentedDaily);
+routes.post('/getMostCommentedweekly', NewsController.getMostCommentedweekly);
+routes.get('/getOneTypeNews/:newsType', NewsController.getOneTypeNews);
+
+//getSources
+routes.get('/getSources', SourcesController.getAllSources);
 
 routes.post('/contactUs', ContactUsController.createContact);
 

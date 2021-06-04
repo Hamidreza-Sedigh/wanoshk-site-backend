@@ -160,6 +160,51 @@ module.exports = {
             return res.status(400).json({ message: 'we dont have any news yet'});
         }
 
+    },
+
+    async getOneTypeNews(req, res){
+        try {
+            console.log("===getNewsTypes===");
+            console.log("param in getOneNews:", req.params);
+            console.log("body  in getOneNews:", req.body);
+            let categoryReq = req.params.newsType;
+            let categoryRequested = '';
+            console.log("categoryReq:", categoryReq);
+            switch(categoryReq) {
+                case 'politic':
+                    categoryRequested = 'سیاسی'
+                    break;
+                case 'b':
+                    categoryRequested = 'اقتصادی'
+                    break;
+                case 'c':
+                    categoryRequested = 'ورزشی'
+                    break;
+                case 'd':
+                    categoryRequested = 'فناوری'
+                    break;
+                case 'e':
+                    categoryRequested = 'اجتماعی'
+                    break;
+                case 'f':
+                    categoryRequested = 'فرهنگی'
+                    break;
+                default:
+                  // code block
+            }
+            console.log("categoryRequested:", categoryRequested);
+
+            const news = await News.find({category:categoryRequested}).sort({ date: -1 }).limit(100);
+            if(news){
+                console.log("-getOneTypeNews");
+                //news.view
+                return res.json({ news })
+            }    
+        } catch (error) {
+            console.log("ERROR in getNews:", error);
+            return res.status(400).json({ message: 'we dont have any news yet'});
+        }
+
     }
 
 }
