@@ -7,8 +7,8 @@ module.exports = {
     async getAllSources(req,res){
 
             try {
-                const sources = await Source.distinct("sourceName");
-                //const sources = await Source.find({});
+                //const sources = await Source.distinct("sourceName");
+                const sources = await Source.find({});
                 if(sources){
                     console.log("All sources", sources);
                     return res.json({ sources })

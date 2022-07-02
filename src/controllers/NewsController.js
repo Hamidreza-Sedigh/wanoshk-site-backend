@@ -174,13 +174,13 @@ module.exports = {
                 case 'politic':
                     categoryRequested = 'سیاسی'
                     break;
-                case 'b':
+                case 'finance':
                     categoryRequested = 'اقتصادی'
                     break;
-                case 'c':
+                case 'sports':
                     categoryRequested = 'ورزشی'
                     break;
-                case 'd':
+                case 'tech':
                     categoryRequested = 'فناوری'
                     break;
                 case 'e':
@@ -205,6 +205,25 @@ module.exports = {
             return res.status(400).json({ message: 'we dont have any news yet'});
         }
 
+    },
+
+    
+    async getOneSourceNews(req, res){
+        try {
+            console.log("===getNewsOneSource===");
+            console.log("param in getOneNews:", req.params);
+            console.log("body  in getOneNews:", req.body);
+            let sourceReq = req.params.newsType;
+            console.log("sourceReq:", sourceReq);
+            const news = await News.find({sourceName:sourceReq}).sort({ date: -1 }).limit(100);
+            if(news){
+                console.log("-getOneTypeNews");
+                return res.json({ news })
+            }    
+        } catch (error) {
+            console.log("ERROR in getNews:", error);
+            return res.status(400).json({ message: 'we dont have any news yet'});
+        }
     }
 
 }
