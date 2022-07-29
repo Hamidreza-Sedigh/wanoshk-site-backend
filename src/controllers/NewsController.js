@@ -40,9 +40,10 @@ module.exports = {
 
     async getMostVisitedDaily(req, res){
         try {
-            const news = await News.find({}).sort({ views: -1 }).limit(10);
+            const news = await News.find({"date":{$gt:new Date(Date.now() - 24*60*60 * 1000)}}).sort({ views: -1 }).limit(10);
             if(news){
                 console.log("-getMostVisitedDaily");
+                console.log("news:", news);
                 return res.json({ news })
             }    
         } catch (error) {
@@ -53,7 +54,7 @@ module.exports = {
 
     async getMostVisitedWeekly(req, res){
         try {
-            const news = await News.find({}).sort({ views: -1 }).limit(10);
+            const news = await News.find({"date":{$gt:new Date(Date.now() - 7 * 24*60*60 * 1000)}}).sort({ views: -1 }).limit(10);
             if(news){
                 console.log("-getMostVisitedWeekly");
                 return res.json({ news })
@@ -104,7 +105,7 @@ module.exports = {
                 //news.view
                 let viewsCount = news[0].views;
                 viewsCount++;
-                console.log("TEST:", viewsCount);
+                console.log("TEST viewCount:", viewsCount);
                 news[0].views = viewsCount;
                 await news[0].save();
                 return res.json({ news })
@@ -213,7 +214,7 @@ module.exports = {
             console.log("===getNewsOneSource===");
             console.log("param in getOneNews:", req.params);
             console.log("body  in getOneNews:", req.body);
-            let sourceReq = req.params.newsType;
+            let sourceReq = req.params.sourceName;
             console.log("sourceReq:", sourceReq);
             const news = await News.find({sourceName:sourceReq}).sort({ date: -1 }).limit(100);
             if(news){
