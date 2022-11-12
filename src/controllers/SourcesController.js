@@ -8,6 +8,8 @@ module.exports = {
 
             try {
                 //const sources = await Source.distinct("sourceName");
+                //const sources = await Source.find({}).distinct('_id', function(error, ids){});
+                //const sources = await Source.find({}).distinct('sourceName');
                 const sources = await Source.find({});
                 if(sources){
                     console.log("All sources", sources);

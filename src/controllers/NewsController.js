@@ -43,7 +43,7 @@ module.exports = {
             const news = await News.find({"date":{$gt:new Date(Date.now() - 24*60*60 * 1000)}}).sort({ views: -1 }).limit(10);
             if(news){
                 console.log("-getMostVisitedDaily");
-                console.log("news:", news);
+                //console.log("news:", news);
                 return res.json({ news })
             }    
         } catch (error) {
