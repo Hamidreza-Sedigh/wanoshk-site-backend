@@ -9,8 +9,8 @@ module.exports = {
             const name = path.basename(file.originalname, ext)
 
             //cb(null, 'abcd1234')  // replace space
-            cb(null, name + Date.now() + '.jpg')
-            //cb(null, '${name.replace(/\s/g, "")}-${(Date.now()}${ext}')  // replace space
+            //cb(null, name + Date.now() + '.jpg')
+            cb(null, '${name.replace(/\s/g, "")}-${(Date.now()}${ext}')  // replace space
         }
     })
 }

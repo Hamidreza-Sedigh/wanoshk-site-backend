@@ -47,7 +47,6 @@ module.exports = {
                 const { eventId } = req.params;
                 console.log("delete routes works fine!", req.params);
                 try {
-                    console.log("in try");
                     await Event.findByIdAndDelete(eventId);
                     console.log("delete worked.");
                     return res.status(204).send();

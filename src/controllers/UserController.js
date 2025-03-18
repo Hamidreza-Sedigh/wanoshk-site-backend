@@ -26,6 +26,7 @@ module.exports = {
                     })
                 })
 
+                // bedoone JWT object ersal mishavad:
                 // return res.json({
                 //     _id: user._id,
                 //     email: user.email,
@@ -40,7 +41,7 @@ module.exports = {
 
 
         } catch (error) {
-            throw Error('Error while registering new user: ${error}')
+            throw Error(`Error while registering new user: ${error}`)
         }
     },
 

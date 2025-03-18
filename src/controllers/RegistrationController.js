@@ -19,11 +19,12 @@ module.exports = {
                     event: eventId,
                     date
                 });
-    
+                
                 await registration
                     .populate('event')
                     .populate('user', '-password') // it  means avoid pass
                     .execPopulate();
+                // without populate it has just the user_id and event_id
 
                 registration.owner = registration.event.user;
                 registration.eventTitle = registration.event.title;

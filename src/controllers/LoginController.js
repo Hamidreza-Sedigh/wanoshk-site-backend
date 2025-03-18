@@ -28,13 +28,14 @@ module.exports = {
                     lastName: user.lastName
                 }
 
+                // return res.json(userResponse); // whitout jwt
+                
                 return jwt.sign({user: userResponse}, 'secret', (err, token)=>{
                     return res.json({
                         user: token,
                         user_id: userResponse._id
                     })
                 } )
-                // return res.json(userResponse); // commented after add jwt
             }else{
                 console.log("test2: wrong pass");
                 return res.status(200).json({message: "email or pass does not match"});
