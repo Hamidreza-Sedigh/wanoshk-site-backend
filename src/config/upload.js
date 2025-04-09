@@ -10,7 +10,7 @@ module.exports = {
 
             //cb(null, 'abcd1234')  // replace space
             //cb(null, name + Date.now() + '.jpg')
-            cb(null, '${name.replace(/\s/g, "")}-${(Date.now()}${ext}')  // replace space
+            cb(null, `${name.replace(/\s/g, "")}-${Date.now()}${ext}`)  // replace space
         }
     })
 }

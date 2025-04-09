@@ -26,8 +26,8 @@ if(process.env.NODE_ENV !== 'production' ){
 
 //console.log(process.env.MONGO_DB_CONNECTION);
 try {
-    mongoose.connect(process.env.MONGO_DB_CONNECTION, {
-    //mongoose.connect("mongodb://localhost:27017/kahrobaDB", {
+    //mongoose.connect(process.env.MONGO_DB_CONNECTION, {  // atlas
+    mongoose.connect("mongodb://localhost:27017/kahrobaDB", {  //localDB
 
         useNewUrlParser: true,
         useUnifiedTopology: true
