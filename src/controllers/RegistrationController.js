@@ -16,14 +16,24 @@ module.exports = {
                 console.log("user_id:", user_id, "eventId", eventId, "date:", date);
                 const registration = await Registration.create({
                     user: user_id,
-                    event: eventId,
-                    date
+                    event: eventId
+                   // date
                 });
+
+                console.log("before populate");
+                console.log(registration);
                 
-                await registration
-                    .populate('event')
-                    .populate('user', '-password') // it  means avoid pass
-                    .execPopulate();
+                // .pop returs error I dont know why
+                //await registration
+                // registration
+                //     .populate('event')
+                //     .populate('user', '-password') // it  means avoid pass
+                //     //.execPopulate();
+                //     .execPopulate((err, doc) => {
+                //         if (err) { return console.error("ERROR in popu", err); }
+                //         console.log(doc);
+                //         return conn.close();
+                //     });
                 // without populate it has just the user_id and event_id
 
                 registration.owner = registration.event.user;
@@ -33,12 +43,14 @@ module.exports = {
                 registration.userEmail = registration.user.email;
                 registration.save();
                 
+                console.log("TEST in registrationController");
                 console.log(registration);
     
                 const ownerSocket = req.connectUsers[registration.event.user]
-
+                      
                 if(ownerSocket) {
                     req.io.to(ownerSocket).emit('registration_request', registration)
+                    //req.io.to(ownerSocket).emit('registration_request', 'some test')
                 }
 
                 return res.json(registration);    

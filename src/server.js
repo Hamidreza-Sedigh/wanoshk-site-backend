@@ -38,17 +38,21 @@ try {
     console.log(error);
 }
 
-// better useing reddis
+// better useing reddis:
 const connectUsers = {  };
 
 io.on('connection', socket => {
-    console.log(socket.handshake.query)
+    console.log('user is connected.', socket.id)
+    console.log("server.js- io:", socket.handshake.query)
     const { user } = socket.handshake.query;
 
     connectUsers[user] = socket.id;
     
     //console.log('user is connected.', socket.id)
-    //io.emit('hamid', {data: "hello-world"})
+    // io.emit('hamid', {datoo: "hello-world"})
+    socket.on('disconnect', () => {
+        console.log('server.js-user disconnected');
+      });
 });
 
 //app.use();

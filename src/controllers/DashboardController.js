@@ -22,6 +22,7 @@ module.exports = {
         });
     },
     
+    //async getAllEvents(req,res){
     getAllEvents(req,res){
         // req.io
         // req.connectUsers[]
