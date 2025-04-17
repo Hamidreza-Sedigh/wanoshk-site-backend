@@ -46,8 +46,9 @@ module.exports = {
                 console.log("TEST in registrationController");
                 console.log(registration);
     
-                const ownerSocket = req.connectUsers[registration.event.user]
-                      
+                //const ownerSocket = req.connectUsers[registration.event.user]
+                const ownerSocket = req.connectUsers['67f7bd2d83430bb44a537913']
+                    
                 if(ownerSocket) {
                     req.io.to(ownerSocket).emit('registration_request', registration)
                     //req.io.to(ownerSocket).emit('registration_request', 'some test')
