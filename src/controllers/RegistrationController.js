@@ -20,20 +20,28 @@ module.exports = {
                    // date
                 });
 
-                console.log("before populate");
-                console.log(registration);
-                
-                // .pop returs error I dont know why
+                const populatedRegistration = await Registration.findById(registration._id)
+                    .populate('event')
+                    .populate('user', '-password') ;
+                console.log("populatedRegistration:", populatedRegistration);
+
+                //old code:
+                await registration
+                    .populate('event')
+                    .populate('user', '-password') 
+                    .execPopulate();
+                    
+
+
+                    // .execPopulate((err, doc) => {
+                    //     if (err) { return console.error("ERROR in popu", err); }
+                    //     console.log(doc);
+                    //     return conn.close();
+                    // });
+
+                              // it  means avoid pass
                 //await registration
-                // registration
-                //     .populate('event')
-                //     .populate('user', '-password') // it  means avoid pass
-                //     //.execPopulate();
-                //     .execPopulate((err, doc) => {
-                //         if (err) { return console.error("ERROR in popu", err); }
-                //         console.log(doc);
-                //         return conn.close();
-                //     });
+                // .pop returs error I dont know why
                 // without populate it has just the user_id and event_id
 
                 registration.owner = registration.event.user;
