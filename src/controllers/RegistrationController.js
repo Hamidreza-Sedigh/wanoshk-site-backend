@@ -12,7 +12,8 @@ module.exports = {
                 const user_id = authData.user._id;
                 const { eventId } = req.params;
                 const { date } = req.body;
-    
+                
+                console.log("RegistrationContPage:");
                 console.log("user_id:", user_id, "eventId", eventId, "date:", date);
                 const registration = await Registration.create({
                     user: user_id,
@@ -20,16 +21,18 @@ module.exports = {
                    // date
                 });
 
+                console.log("registration:", registration);
+
                 const populatedRegistration = await Registration.findById(registration._id)
                     .populate('event')
                     .populate('user', '-password') ;
                 console.log("populatedRegistration:", populatedRegistration);
 
                 //old code:
-                await registration
-                    .populate('event')
-                    .populate('user', '-password') 
-                    .execPopulate();
+                // await registration
+                //     .populate('event')
+                //     .populate('user', '-password') 
+                //     .execPopulate();
                     
 
 
@@ -43,19 +46,27 @@ module.exports = {
                 //await registration
                 // .pop returs error I dont know why
                 // without populate it has just the user_id and event_id
+                //populatedRegistration
+                // registration.owner = registration.event.user;
+                // registration.eventTitle = registration.event.title;
+                // registration.eventPrice = registration.event.price;
+                // registration.eventDate = registration.event.date;
+                // registration.userEmail = registration.user.email;
+                // registration.save();
 
-                registration.owner = registration.event.user;
-                registration.eventTitle = registration.event.title;
-                registration.eventPrice = registration.event.price;
-                registration.eventDate = registration.event.date;
-                registration.userEmail = registration.user.email;
+
+
+                registration.owner = populatedRegistration.event.user;
+                registration.eventTitle = populatedRegistration.event.title;
+                registration.eventPrice = populatedRegistration.event.price;
+                registration.eventDate = populatedRegistration.event.date;
+                registration.userEmail = populatedRegistration.user.email;
                 registration.save();
                 
-                console.log("TEST in registrationController");
-                console.log(registration);
+                console.log("registrationAfterSave:", registration);
     
-                //const ownerSocket = req.connectUsers[registration.event.user]
-                const ownerSocket = req.connectUsers['67f7bd2d83430bb44a537913']
+                const ownerSocket = req.connectUsers[populatedRegistration.event.user];
+                // const ownerSocket = req.connectUsers['67f7bd2d83430bb44a537913'];
                     
                 if(ownerSocket) {
                     req.io.to(ownerSocket).emit('registration_request', registration)
