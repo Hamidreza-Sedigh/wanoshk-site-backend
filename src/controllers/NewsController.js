@@ -225,6 +225,52 @@ module.exports = {
             console.log("ERROR in getNews:", error);
             return res.status(400).json({ message: 'we dont have any news yet'});
         }
+    },
+
+    //new apis:
+    async getFilteredNews(req, res){
+        console.log("TEST CONTROLLER");
+        console.log(req.query);
+
+        const { category } = req.query;
+      
+        const filter = {};
+        if (category) filter.category = category;
+      
+        try {
+          const news = await News.find(filter).sort({ date: -1 }).limit(20);
+          res.json(news);
+        } catch (err) {
+          res.status(500).json({ message: 'خطا در دریافت اخبار' });
+        }
+    },
+    
+    async getNewsDetails(req,res){
+        
+        const { id } = req.params;
+        console.log("TEST : getNewsDetails");
+        try {
+            // const news = await News.find({_id: req.params._id})
+            const newsItem = await News.findById(id);
+
+            if (!newsItem) {
+                return res.status(404).json({ message: 'خبر یافت نشد.' });
+            }
+
+            // res.json(newsItem);
+            //todo:
+            // let viewsCount = newsItem[0].views;
+            // viewsCount++;
+            // console.log("TEST viewCount:", viewsCount);
+            // newsItem[0].views = viewsCount;
+            // await newsItem[0].save();
+            res.json( newsItem )
+                
+        } catch (error) {
+            console.log("ERROR in getNewsDetails:", error);
+            return res.status(500).json({ message: 'we dont have any news yet'});
+        }
+
     }
 
 }

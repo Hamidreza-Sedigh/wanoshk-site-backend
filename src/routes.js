@@ -44,6 +44,11 @@ routes.post('/getMostCommentedDaily', NewsController.getMostCommentedDaily);
 routes.post('/getMostCommentedweekly', NewsController.getMostCommentedweekly);
 routes.get('/getOneTypeNews/:newsType', NewsController.getOneTypeNews);
 routes.get('/getOneSourceNews/:sourceName', NewsController.getOneSourceNews);
+//new ones:
+routes.get('/api/news', NewsController.getFilteredNews);
+routes.get('/api/news/:id/', NewsController.getNewsDetails);
+
+
 
 //getSources
 routes.get('/getSources', SourcesController.getAllSources);
