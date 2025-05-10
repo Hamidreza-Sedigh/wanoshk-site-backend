@@ -257,14 +257,22 @@ module.exports = {
                 return res.status(404).json({ message: 'خبر یافت نشد.' });
             }
 
+            if (newsItem ) {
+                console.log('-getOneNews');
+                // افزایش بازدید فقط با یک درخواست
+                await News.updateOne({ _id: newsItem._id }, { $inc: { views: 1 } });
+              
+                return res.json( newsItem );
+              }
+
             // res.json(newsItem);
-            //todo:
-            // let viewsCount = newsItem[0].views;
+            // //todo:
+            // let viewsCount = newsItem.views;
             // viewsCount++;
             // console.log("TEST viewCount:", viewsCount);
-            // newsItem[0].views = viewsCount;
-            // await newsItem[0].save();
-            res.json( newsItem )
+            // newsItem.views = viewsCount;
+            // await newsItem.save();
+            // res.json( newsItem )
                 
         } catch (error) {
             console.log("ERROR in getNewsDetails:", error);
