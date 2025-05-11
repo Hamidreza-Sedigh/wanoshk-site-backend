@@ -279,6 +279,20 @@ module.exports = {
             return res.status(500).json({ message: 'we dont have any news yet'});
         }
 
-    }
+    },
+
+    async getLatestNews(req,res){
+
+        try {
+            const news = await News.find({}).sort({ date: -1 }).limit(50);
+            if(news){
+                return res.json({ news })
+            }    
+        } catch (error) {
+            console.log("ERROR in getNews:", error);
+            return res.status(500).json({ message: 'we dont have any news yet'});
+        }
+
+},
 
 }
