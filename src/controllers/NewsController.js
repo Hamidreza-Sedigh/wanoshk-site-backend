@@ -236,6 +236,8 @@ module.exports = {
       
         const filter = {};
         if (category) filter.category = category;
+
+        console.log("Test-getFilteredNews-filter:", filter)
       
         try {
           const news = await News.find(filter).sort({ date: -1 }).limit(20);
@@ -282,11 +284,12 @@ module.exports = {
     },
 
     async getLatestNews(req,res){
-
+        console.log("Test. getLatestNews");
         try {
-            const news = await News.find({}).sort({ date: -1 }).limit(50);
+            const news = await News.find({}).sort({ date: -1 }).limit(20);
             if(news){
-                return res.json({ news })
+                //console.log({news});
+                return res.json( news )
             }    
         } catch (error) {
             console.log("ERROR in getNews:", error);
