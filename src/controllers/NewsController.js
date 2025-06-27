@@ -240,8 +240,23 @@ module.exports = {
         console.log("Test-getFilteredNews-filter:", filter)
       
         try {
-          const news = await News.find(filter).sort({ date: -1 }).limit(20);
-          res.json(news);
+          const news = await News.find(filter)
+            .sort({ date: -1 })
+            .limit(20)
+            .lean();
+            if (!news || news.length === 0) {
+                return res.status(404).json({ message: 'خبری یافت نشد' });
+            }
+            
+            console.log(news);
+
+            res.json(news);
+            // return res.json({
+            //     success: true,
+            //     count: news.length,
+            //     data: news
+            // });
+
         } catch (err) {
           res.status(500).json({ message: 'خطا در دریافت اخبار' });
         }
