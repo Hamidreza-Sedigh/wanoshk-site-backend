@@ -48,8 +48,6 @@ routes.get('/getOneSourceNews/:sourceName', NewsController.getOneSourceNews);
 //new ones:
 routes.get('/api/news/latest', NewsController.getLatestNews);
 routes.get('/api/news', NewsController.getFilteredNews);
-
-
 routes.get('/api/news/:id/', NewsController.getNewsDetails);
 
 

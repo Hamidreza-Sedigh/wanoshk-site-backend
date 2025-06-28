@@ -275,15 +275,20 @@ module.exports = {
             }
 
             if (newsItem ) {
-                console.log('-getOneNews');
-                // افزایش بازدید فقط با یک درخواست
-                await News.updateOne({ _id: newsItem._id }, { $inc: { views: 1 } });
-              
-                return res.json( newsItem );
+                const updatedNews = await News.findByIdAndUpdate(
+                    newsItem._id,
+                    { $inc: { views: 1 } },
+                    { new: true } // این قسمت مهمه: مقدار جدید رو برمی‌گردونه
+                  );
+                  
+                  return res.json(updatedNews);
               }
 
-            // res.json(newsItem);
-            // //todo:
+            //OLD:: 
+              // await News.updateOne({ _id: newsItem._id }, { $inc: { views: 1 } });
+              // return res.json( newsItem );
+
+            // OLDER:
             // let viewsCount = newsItem.views;
             // viewsCount++;
             // console.log("TEST viewCount:", viewsCount);
