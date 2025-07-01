@@ -17,7 +17,7 @@ module.exports = {
                         return res.json({authData, news})
                     }    
                 } catch (error) {
-                    return res.status(400).json({ message: 'we dont have any news yet'});
+                    return res.status(400).json({ message: 'getAllNews1-we dont have any news yet'});
                 }
             }
         });
@@ -33,7 +33,7 @@ module.exports = {
                 }    
             } catch (error) {
                 console.log("ERROR in getNews:", error);
-                return res.status(400).json({ message: 'we dont have any news yet'});
+                return res.status(400).json({ message: 'getAllNews-we dont have any news yet'});
             }
 
     },
@@ -316,6 +316,19 @@ module.exports = {
             return res.status(500).json({ message: 'we dont have any news yet'});
         }
 
-},
+    },
+
+    async getPopularNews(req,res){
+        console.log("Test. getPopularNews");
+        try {
+            const limit = parseInt(req.query.limit) || 5;
+            const popularNews = await News.find().sort({ views: -1 }).limit(limit);
+            res.json(popularNews);
+        } catch (err) {
+            console.error('Error fetching popular news:', err);
+            res.status(500).json({ error: 'Server error' });
+        }
+
+    },
 
 }
