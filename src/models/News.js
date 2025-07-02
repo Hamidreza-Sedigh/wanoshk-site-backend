@@ -16,4 +16,6 @@ const NewsSchema = new mongoose.Schema({
     views: Number
 })
 
+NewsSchema.index({ title: 'text', description: 'text', passage: 'text' });
+
 module.exports = mongoose.model('News', NewsSchema)
