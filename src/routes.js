@@ -52,7 +52,7 @@ routes.get('/api/news', NewsController.getFilteredNews);
 routes.get('/api/news/popular', NewsController.getPopularNews);
 routes.get('/api/news/:id/', NewsController.getNewsDetails);
 
-
+routes.post('/api/contact', ContactUsController.createContact);
 
 
 
@@ -60,7 +60,7 @@ routes.get('/api/news/:id/', NewsController.getNewsDetails);
 //getSources
 routes.get('/getSources', SourcesController.getAllSources);
 
-routes.post('/contactUs', ContactUsController.createContact);
+
 
 //Dashboard:
 routes.get('/dashboard/:sport', verifyToken, DashboardController.getAllEvents)
