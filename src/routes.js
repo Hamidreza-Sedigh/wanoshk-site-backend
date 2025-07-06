@@ -23,6 +23,25 @@ routes.get('/status', (req, res)=>{
     res.send({ status : 200})
 });
 
+
+//new ones: Tested *************************************************
+routes.get('/api/news/search', NewsController.searchNews);
+routes.get('/api/news/latest', NewsController.getLatestNews);
+routes.get('/api/news', NewsController.getFilteredNews);
+routes.get('/api/news/popular', NewsController.getPopularNews);
+routes.get('/api/news/:id/', NewsController.getNewsDetails);
+
+routes.post('/api/contact', ContactUsController.createContact);
+//getSources
+routes.get('/api/getSources', SourcesController.getAllSources);
+
+routes.get('/api/getOneSourceNews/:sourceName', NewsController.getOneSourceNews);
+
+//******************************************************************* */
+
+
+
+
 //TODO: add todo extension VSCODE
 
 //Registration
@@ -43,22 +62,9 @@ routes.post('/getMostVisitedWeekly', NewsController.getMostVisitedWeekly);
 routes.post('/getMostCommentedDaily', NewsController.getMostCommentedDaily);
 routes.post('/getMostCommentedweekly', NewsController.getMostCommentedweekly);
 routes.get('/getOneTypeNews/:newsType', NewsController.getOneTypeNews);
-routes.get('/getOneSourceNews/:sourceName', NewsController.getOneSourceNews);
-
-//new ones:
-routes.get('/api/news/search', NewsController.searchNews);
-routes.get('/api/news/latest', NewsController.getLatestNews);
-routes.get('/api/news', NewsController.getFilteredNews);
-routes.get('/api/news/popular', NewsController.getPopularNews);
-routes.get('/api/news/:id/', NewsController.getNewsDetails);
-
-routes.post('/api/contact', ContactUsController.createContact);
 
 
 
-
-//getSources
-routes.get('/getSources', SourcesController.getAllSources);
 
 
 

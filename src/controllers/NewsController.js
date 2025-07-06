@@ -209,21 +209,32 @@ module.exports = {
     },
 
     
-    async getOneSourceNews(req, res){
+    async getOneSourceNews(req, res) {
         try {
-            console.log("===getNewsOneSource===");
-            console.log("param in getOneNews:", req.params);
-            console.log("body  in getOneNews:", req.body);
-            let sourceReq = req.params.sourceName;
-            console.log("sourceReq:", sourceReq);
-            const news = await News.find({sourceName:sourceReq}).sort({ date: -1 }).limit(100);
-            if(news){
-                console.log("-getOneTypeNews");
-                return res.json({ news })
-            }    
+            const sourceName = req.params.sourceName;
+
+            const page = parseInt(req.query.page) || 1;
+            const pageSize = parseInt(req.query.pageSize) || 10;
+
+            const skip = (page - 1) * pageSize;
+
+            const [news, total] = await Promise.all([
+            News.find({ sourceName })
+                .sort({ date: -1 })
+                .skip(skip)
+                .limit(pageSize),
+            News.countDocuments({ sourceName }),
+            ]);
+
+            return res.status(200).json({
+                news,
+                total,
+                currentPage: page,
+                pageSize,
+                });
         } catch (error) {
-            console.log("ERROR in getNews:", error);
-            return res.status(400).json({ message: 'we dont have any news yet'});
+            console.error("خطا در getOneSourceNews:", error);
+            return res.status(500).json({ message: "خطای سرور" });
         }
     },
 

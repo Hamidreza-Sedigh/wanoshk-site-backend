@@ -5,7 +5,7 @@ module.exports = {
     
     
     async getAllSources(req,res){
-
+            console.log("TEST getAllSources");
             try {
                 //const sources = await Source.distinct("sourceName");
                 //const sources = await Source.find({}).distinct('_id', function(error, ids){});
