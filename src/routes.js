@@ -37,6 +37,10 @@ routes.get('/api/getSources', SourcesController.getAllSources);
 
 routes.get('/api/getOneSourceNews/:sourceName', NewsController.getOneSourceNews);
 
+
+routes.post('/api/register', UserController.createUser);
+routes.post('/api/login', LoginController.login);
+
 //******************************************************************* */
 
 
@@ -80,7 +84,7 @@ routes.post('/event', verifyToken, upload.single("thumbnail"), EventController.c
 routes.delete('/event/:eventId', verifyToken, EventController.delete)
 
 //User
-routes.post('/user/register', UserController.createUser);
-routes.get('/user/:userId', UserController.getUserById);
+// routes.post('/user/register', UserController.createUser);
+// routes.get('/user/:userId', UserController.getUserById);
 
 module.exports = routes;

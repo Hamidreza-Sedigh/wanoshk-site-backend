@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const jwt =      require('jsonwebtoken');
 
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; // new
+
 
 module.exports = {
     async store(req, res){
@@ -43,6 +45,24 @@ module.exports = {
 
         } catch (error) {
             throw Error(`Error while authenticating a user ${error}`);// it has error
+        }
+    },
+
+    async login(req, res) {
+        const { email, password } = req.body;
+
+        try {
+        const user = await User.findOne({ email });
+        if (!user) return res.status(400).json({ error: 'User not found' });
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) return res.status(401).json({ error: 'Invalid password' });
+
+        const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '2h' });
+
+        res.json({ token });
+        } catch (err) {
+        res.status(500).json({ error: 'Server error during login' });
         }
     }
 }
