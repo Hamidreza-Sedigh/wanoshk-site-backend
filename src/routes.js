@@ -41,6 +41,8 @@ routes.get('/api/getOneSourceNews/:sourceName', NewsController.getOneSourceNews)
 routes.post('/api/register', UserController.createUser);
 routes.post('/api/login', LoginController.login);
 
+routes.post('/api/report', ContactUsController.reportProblem);
+
 //******************************************************************* */
 
 
