@@ -42,17 +42,35 @@ module.exports = {
         return res.status(400).json({ message: 'newsId و url الزامی هستند.' });
       }
 
+      // گرفتن IP کاربر
+      const ip = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.connection.remoteAddress;
+
+      // زمان 24 ساعت قبل
+      const since = new Date(Date.now() - 1 * 60 * 60 * 1000);
+
+      // بررسی وجود گزارش از این IP برای همین newsId در 1 ساعت گذشته
+      const existingReport = await ReportModel.findOne({
+        newsId: new Types.ObjectId(newsId),
+        ip,
+        createdAt: { $gte: since },
+      });
+
+      if (existingReport) {
+        return res.status(429).json({ message: 'شما قبلاً این خبر را در 1 ساعت گذشته گزارش کرده‌اید.' });
+      }
+
+      // ذخیره گزارش جدید با IP
       const newReport = await ReportModel.create({
         newsId: new Types.ObjectId(newsId),
         url,
         description: description || '',
+        ip,
       });
 
       return res.status(201).json({
         message: 'گزارش با موفقیت ثبت شد.',
         data: newReport,
       });
-
     } catch (err) {
       console.error('خطا در ثبت گزارش:', err);
       return res.status(500).json({ message: 'خطایی در ثبت گزارش رخ داد.' });

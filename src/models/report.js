@@ -4,7 +4,7 @@ const ReportSchema = new mongoose.Schema({
   newsId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: 'News', // فقط برای ارتباط با مدل خبر در آینده
+    ref: 'News',
   },
   url: {
     type: String,
@@ -13,6 +13,10 @@ const ReportSchema = new mongoose.Schema({
   description: {
     type: String,
     default: '',
+  },
+  ip: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,
