@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const NewsSchema = new mongoose.Schema({
+    shortId: { type: String, unique: true, required: true }, // nanoid کوتاه
     sourceName : String,
     siteAddress : String,
     title : String,
@@ -22,5 +23,6 @@ const NewsSchema = new mongoose.Schema({
 })
 
 NewsSchema.index({ title: 'text', description: 'text', passage: 'text' });
+NewsSchema.index({ date: 1, views: -1 });
 
 module.exports = mongoose.model('News', NewsSchema)
