@@ -333,25 +333,25 @@ module.exports = {
         console.log("Test. getPopularNews");
         try {
             const limit = parseInt(req.query.limit) || 5;
-            const popularNews = await News.find().sort({ views: -1 }).limit(limit);
+            // const popularNews = await News.find().sort({ views: -1 }).limit(limit);
             // res.json(popularNews);
             // 24h:
-            // const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-            // const popularNewsLast24Hours = await News.find({
-            // date: { $gte: twentyFourHoursAgo }
-            // })
-            // .sort({ views: -1 })
-            // .limit(limit);
-            // res.json(popularNewsLast24Hours);
-
-            // 1week:
-            const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-            const popularNewsLastWeek = await News.find({
-            createdAt: { $gte: oneWeekAgo }
+            const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+            const popularNewsLast24Hours = await News.find({
+            date: { $gte: twentyFourHoursAgo }
             })
             .sort({ views: -1 })
             .limit(limit);
-            res.json(popularNewsLastWeek);
+            res.json(popularNewsLast24Hours);
+
+            // 1week:
+            // const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+            // const popularNewsLastWeek = await News.find({
+            // createdAt: { $gte: oneWeekAgo }
+            // })
+            // .sort({ views: -1 })
+            // .limit(limit);
+            // res.json(popularNewsLastWeek);
 
         } catch (err) {
             console.error('Error fetching popular news:', err);
