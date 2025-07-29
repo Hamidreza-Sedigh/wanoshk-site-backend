@@ -25,23 +25,24 @@ routes.get('/status', (req, res)=>{
 
 
 //new ones: Tested *************************************************
+
 routes.get('/api/news/search', NewsController.searchNews);
 routes.get('/api/news/latest', NewsController.getLatestNews);
-routes.get('/api/news', NewsController.getFilteredNews);
 routes.get('/api/news/popular', NewsController.getPopularNews);
-routes.get('/api/news/:id/', NewsController.getNewsDetails);
+routes.get('/api/news', NewsController.getFilteredNews);
+routes.get('/api/news/:shortId', NewsController.getNewsByShortId);
+// routes.get('/api/news/:id/', NewsController.getNewsDetails);
 
-routes.post('/api/contact', ContactUsController.createContact);
-//getSources
 routes.get('/api/getSources', SourcesController.getAllSources);
-
 routes.get('/api/getOneSourceNews/:sourceName', NewsController.getOneSourceNews);
 
+routes.post('/api/contact', ContactUsController.createContact);
+routes.post('/api/report', ContactUsController.reportProblem);
 
 routes.post('/api/register', UserController.createUser);
 routes.post('/api/login', LoginController.login);
 
-routes.post('/api/report', ContactUsController.reportProblem);
+
 
 //******************************************************************* */
 
