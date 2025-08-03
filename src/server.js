@@ -5,10 +5,9 @@ const routes =   require('./routes');
 const path =     require('path');
 const http =     require('http');
 //const socketio = require('socket.io')
-const Port = process.env.PORT || 8000
-
-
-
+const config = require('../config');
+//const Port = process.env.PORT || 8000;
+  const Port = config.app.port;
 const app =      express();
 const server = http.Server(app);
 //const io = socketio(server);  //old version
@@ -20,14 +19,26 @@ const io = require("socket.io")(server, {
 });
 
 
-if(process.env.NODE_ENV !== 'production' ){
-    require('dotenv').config()
-}
+
+console.log("ENV:", config.env);
+console.log("DB:", config.db.uri);
+console.log("PORT:", config.app.port);
+
+
+
+
+
+
+
+// if(process.env.NODE_ENV !== 'production' ){
+//     require('dotenv').config()
+// }
 
 //console.log(process.env.MONGO_DB_CONNECTION);
 try {
     //mongoose.connect(process.env.MONGO_DB_CONNECTION, {  // atlas
-    mongoose.connect("mongodb://localhost:27017/kahrobaDB", {  //localDB
+    //mongoose.connect("mongodb://localhost:27017/kahrobaDB", {  //localDB
+      mongoose.connect(config.db.uri, {
 
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -55,6 +66,7 @@ io.on('connection', socket => {
       });
 });
 
+// Middlewares
 //app.use();
 app.use((req, res, next)=> {
     req.io = io;
@@ -69,6 +81,7 @@ app.use(routes);
 
 //app.listen(Port, ()=>{  // it was without socket
 server.listen(Port, ()=>{   // with socket
-    console.log(`Listen on ${Port}`)
+    // console.log(`Listen on ${Port}`)
+    console.log(`🚀 Server listening on port ${Port}`);
     
 })
