@@ -27,5 +27,6 @@ const ReportSchema = new mongoose.Schema({
     default: false,
   },
 });
+//name with capital
 
 module.exports = mongoose.model('Report', ReportSchema);

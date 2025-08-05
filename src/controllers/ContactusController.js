@@ -58,7 +58,7 @@ module.exports = {
       if (existingReport) {
         return res.status(429).json({ message: 'شما قبلاً این خبر را در 1 ساعت گذشته گزارش کرده‌اید.' });
       }
-
+      // crrected
       // ذخیره گزارش جدید با IP
       const newReport = await ReportModel.create({
         newsId: new Types.ObjectId(newsId),
