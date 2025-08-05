@@ -6,7 +6,7 @@ const NewsSchema = new mongoose.Schema({
     siteAddress : String,
     title : String,
     description : String,
-    summary:  String,
+    // summary:  String,
     link : String,
     passage : String,
     date : Date,
