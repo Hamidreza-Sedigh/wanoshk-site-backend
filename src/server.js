@@ -6,6 +6,7 @@ const path =     require('path');
 const http =     require('http');
 //const socketio = require('socket.io')
 const config = require('../config');
+const { generateSitemap } = require('./utils/sitemap');
 //const Port = process.env.PORT || 8000;
   const Port = config.app.port;
 const app =      express();
@@ -65,6 +66,21 @@ io.on('connection', socket => {
         console.log('server.js-user disconnected');
       });
 });
+
+//sitemap:
+app.get('/sitemap-news.xml', async (req, res) => {
+    try {
+      // اینجا دیتای اخبار رو از MongoDB بیار
+      const newsList = await News.find({}, { shortId: 1, updatedAt: 1 });
+      const sitemap = await generateSitemap('http://kahrobanet.ir', newsList);
+      
+      res.header('Content-Type', 'application/xml');
+      res.send(sitemap);
+    } catch (err) {
+      console.error(err);
+      res.status(500).end();
+    }
+  });
 
 // Middlewares
 //app.use();
