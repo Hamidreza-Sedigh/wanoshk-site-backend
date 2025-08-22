@@ -6,6 +6,7 @@ const path =     require('path');
 const http =     require('http');
 //const socketio = require('socket.io')
 const config = require('../config');
+const News = require("./models/News");
 const { generateSitemap } = require('./utils/sitemap');
 //const Port = process.env.PORT || 8000;
   const Port = config.app.port;
