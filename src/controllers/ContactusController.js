@@ -50,7 +50,8 @@ module.exports = {
 
       // بررسی وجود گزارش از این IP برای همین newsId در 1 ساعت گذشته
       const existingReport = await ReportModel.findOne({
-        newsId: new Types.ObjectId(newsId),
+        //newsId: new Types.ObjectId(newsId),
+        newsId,
         ip,
         createdAt: { $gte: since },
       });
@@ -61,7 +62,7 @@ module.exports = {
       // crrected
       // ذخیره گزارش جدید با IP
       const newReport = await ReportModel.create({
-        newsId: new Types.ObjectId(newsId),
+        newsId,
         url,
         description: description || '',
         ip,
