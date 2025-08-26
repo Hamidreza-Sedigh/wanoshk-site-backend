@@ -333,25 +333,33 @@ module.exports = {
         console.log("Test. getPopularNews");
         try {
             const limit = parseInt(req.query.limit) || 5;
-            // const popularNews = await News.find().sort({ views: -1 }).limit(limit);
-            // res.json(popularNews);
-            // 24h:
-            const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-            const popularNewsLast24Hours = await News.find({
-            date: { $gte: twentyFourHoursAgo }
-            })
-            .sort({ views: -1 })
-            .limit(limit);
-            res.json(popularNewsLast24Hours);
+            const period = req.query.period || "day"; // day / week / month
 
-            // 1week:
-            // const oneWeekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-            // const popularNewsLastWeek = await News.find({
-            // createdAt: { $gte: oneWeekAgo }
-            // })
-            // .sort({ views: -1 })
-            // .limit(limit);
-            // res.json(popularNewsLastWeek);
+            let dateThreshold;
+
+            const now = new Date();
+            switch (period) {
+            case "week":
+                dateThreshold = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                break;
+            case "month":
+                dateThreshold = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                break;
+            case "day":
+            default:
+                dateThreshold = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                break;
+            }
+            
+            const popularNews = await News.find({
+                date: { $gte: dateThreshold }
+            })
+                .sort({ views: -1 })
+                .limit(limit);
+        
+            res.json(popularNews);
+            // 24h:
+            
 
         } catch (err) {
             console.error('Error fetching popular news:', err);
