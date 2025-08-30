@@ -8,6 +8,11 @@ const http =     require('http');
 const config = require('../config');
 const News = require("./models/News");
 const { generateSitemap } = require('./utils/sitemap');
+const commentRoutes = require("./routes/commentRoutes");
+
+
+
+
 //const Port = process.env.PORT || 8000;
   const Port = config.app.port;
 const app =      express();
@@ -95,6 +100,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/files", express.static(path.resolve(__dirname, "..", "files")));// tell express to host files.
 app.use(routes);
+app.use("/api/comments", commentRoutes);
 
 //app.listen(Port, ()=>{  // it was without socket
 server.listen(Port, ()=>{   // with socket
