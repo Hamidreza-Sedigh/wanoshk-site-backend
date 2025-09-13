@@ -239,39 +239,50 @@ module.exports = {
     },
 
     //new apis:
-    async getFilteredNews(req, res){
+    async getFilteredNews(req, res) {
         console.log("TEST CONTROLLER");
         console.log(req.query);
-
-        const { category } = req.query;
+      
+        const { category, page = 1, pageSize = 20 } = req.query;
       
         const filter = {};
         if (category) filter.category = category;
-
-        console.log("Test-getFilteredNews-filter:", filter)
+      
+        console.log("Test-getFilteredNews-filter:", filter);
       
         try {
+          const skip = (parseInt(page) - 1) * parseInt(pageSize);
+      
+          // مجموع کل خبرها برای محاسبه تعداد صفحات
+          const total = await News.countDocuments(filter);
+      
+          // گرفتن اخبار با صفحه‌بندی
           const news = await News.find(filter)
             .sort({ date: -1 })
-            .limit(20)
+            .skip(skip)
+            .limit(parseInt(pageSize))
             .lean();
-            if (!news || news.length === 0) {
-                return res.status(404).json({ message: 'خبری یافت نشد' });
-            }
-            
-            console.log(news);
-
-            res.json(news);
-            // return res.json({
-            //     success: true,
-            //     count: news.length,
-            //     data: news
-            // });
-
+      
+          if (!news || news.length === 0) {
+            return res.status(200).json({
+              news: [],
+              total: 0,
+            });
+          }
+      
+          res.json({
+            news,
+            total,
+            page: parseInt(page),
+            pageSize: parseInt(pageSize),
+          });
+      
         } catch (err) {
-          res.status(500).json({ message: 'خطا در دریافت اخبار' });
+          console.error("Error in getFilteredNews:", err);
+          res.status(500).json({ message: "خطا در دریافت اخبار" });
         }
-    },
+      },
+      
     
     async getNewsDetails(req,res){
         
