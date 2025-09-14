@@ -379,31 +379,36 @@ module.exports = {
 
     },
 
-    async searchNews(req,res){
+    async searchNews(req, res) {
         console.log("Test. searchNews");
         const { q, page = 1, pageSize = 2 } = req.query;
-        console.log("Test. searchNews:q:    ", q);
+        console.log("Test. searchNews:q:", q);
+      
         if (!q) return res.status(400).json({ error: "Search query is required" });
-
+      
         try {
-            const results = await News.find(
-              { $text: { $search: q } },
-              { score: { $meta: "textScore" } }
-            )
+          // شمارش کل نتایج
+          const total = await News.countDocuments({ $text: { $search: q } });
+      
+          // دریافت نتایج صفحه فعلی
+          const results = await News.find(
+            { $text: { $search: q } },
+            { score: { $meta: "textScore" } }
+          )
             .sort({ score: { $meta: "textScore" } })
             .skip((page - 1) * pageSize)
             .limit(Number(pageSize));
-        
-            // console.log("results");
-            // console.log(results);
-
-            res.json({ results });
-          } catch (err) {
-            console.log("ERR");
-            console.log(err);
-            res.status(500).json({ error: err.message });
-          }
-
+      
+          res.json({
+            results,
+            total, // 👈 اضافه شد
+            page: Number(page),
+            pageSize: Number(pageSize),
+          });
+        } catch (err) {
+          console.error("ERR", err);
+          res.status(500).json({ error: err.message });
+        }
     },
     
     async getNewsByShortId(req, res) {
